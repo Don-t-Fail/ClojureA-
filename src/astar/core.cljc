@@ -3,28 +3,28 @@
                :cljs [tailrecursion.priority-map :refer [priority-map-keyfn]])))
 
 
-(def graph {:a [:b :c]
-            :b [:a :d :e]
-            :c [:a :d :e]
-            :d [:b :c :f]
-            :e [:b :c :f]
-            :f [:e :d]})
+(def graph {:alpha [:charlie :beta]
+            :beta [:alpha :delta]
+            :charlie [:alpha :echo :delta]
+            :delta [:beta :charlie :foxtrot]
+            :echo [:charlie :foxtrot]
+            :foxtrot [:echo :delta]})
 
 (defn dist [from to]
-  (let [d {:a {:b 4 :c 2}
-           :b {:a 4 :d 1 :e 1}
-           :c {:a 2 :d 3 :e 5}
-           :d {:b 1 :c 3 :f 3}
-           :e {:b 1 :c 5 :f 2}
-           :f {:d 3 :e 2}}]
+  (let [d {:alpha {:charlie 37 :beta 12}
+           :beta {:alpha 12 :delta 35}
+           :charlie {:alpha 37 :echo 51 :delta 42}
+           :delta {:beta 35 :charlie 42 :foxtrot 17}
+           :echo {:charlie 51 :foxtrot 33}
+           :foxtrot {:echo 33 :delta 17}}]
     (get-in d [from to])))
 
-(def h {:a 0
-        :b 0
-        :c 0
-        :d 0
-        :e 0
-        :f 0})
+(def h {:alpha 0
+        :beta 0
+        :charlie 0
+        :delta 0
+        :echo 0
+        :foxtrot 0})
 
 
 
